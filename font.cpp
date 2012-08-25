@@ -306,11 +306,13 @@ void CFont::DrawText (float x, float y, const char *text) {
 	else left = (param.x_resolution - GetTextWidth (text)) / 2;
 	if (left < 0) left = 0;
 
+#ifndef __PSP__ // FIXME
 	if (forientation == OR_TOP) {
 		glRasterPos2i ((int)left, (int)(param.y_resolution - curr_size - y));
 	} else {
 		glRasterPos2i ((int)left, (int)y);
 	}
+#endif
 
 	if (USE_UNICODE) fonts[curr_font]->Render (UnicodeStr (text));
 		else fonts[curr_font]->Render (text);
@@ -330,11 +332,13 @@ void CFont::DrawText (float x, float y, const wchar_t *text) {
 	else left = (param.x_resolution - GetTextWidth (text)) / 2;
 	if (left < 0) left = 0;
 
+#ifndef __PSP__ // FIXME
 	if (forientation == OR_TOP) {
 		glRasterPos2i ((int)left, (int)(param.y_resolution - curr_size - y));
 	} else {
 		glRasterPos2i ((int)left, (int)y);
 	}
+#endif
 
 	fonts[curr_font]->Render (text);
 	glPopMatrix();
@@ -359,12 +363,13 @@ void CFont::DrawText
 	else left = (param.x_resolution - GetTextWidth (text, fontname, size)) / 2;
 	if (left < 0) left = 0;
 
-
+#ifndef __PSP__ // FIXME
 	if (forientation == OR_TOP) {
 		glRasterPos2i ((int)left, (int)(param.y_resolution - size - y));
 	} else {
 		glRasterPos2i ((int)left, (int)y);
 	}
+#endif
 
 	if (USE_UNICODE) fonts[temp_font]->Render (UnicodeStr (text));
 		else fonts[temp_font]->Render (text);
@@ -386,11 +391,13 @@ void CFont::DrawText
 	else left = (param.x_resolution - GetTextWidth (text, fontname, size)) / 2;
 	if (left < 0) left = 0;
 
+#ifndef __PSP__ // FIXME
 	if (forientation == OR_TOP) {
 		glRasterPos2i ((int)left, (int)(param.y_resolution - size - y));
 	} else {
 		glRasterPos2i ((int)left, (int)y);
 	}
+#endif
 
 	fonts[temp_font]->Render (text);
 	glPopMatrix();
