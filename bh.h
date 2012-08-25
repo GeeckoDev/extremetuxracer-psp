@@ -70,7 +70,6 @@ GNU General Public License for more details.
 	#include <pwd.h>
 	#include <dirent.h>
 	#include <sys/time.h>
-	#include <GL/glx.h>
 	#define SEP "/"
 #elif defined ( OS_WIN32_MINGW )
 	#define SEP "/"
