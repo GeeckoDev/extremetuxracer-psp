@@ -114,6 +114,10 @@ typedef struct SDL_Surface {
 void CWinsys::SetupVideoMode (TScreenRes resolution) {
     int bpp = 0;
     Uint32 video_flags = SDL_OPENGL;
+#ifdef __PSP__
+    video_flags |= SDL_FULLSCREEN;
+    bpp = 16;
+#else    
     if (param.fullscreen) video_flags |= SDL_FULLSCREEN;
 	switch (param.bpp_mode ) {
 		case 0:	bpp = 0; break;
@@ -121,6 +125,7 @@ void CWinsys::SetupVideoMode (TScreenRes resolution) {
 		case 2:	bpp = 32; break;
 		default: param.bpp_mode = 0; bpp = 0;
     }
+#endif
 	if ((screen = SDL_SetVideoMode 
 	(resolution.width, resolution.height, bpp, video_flags)) == NULL) {
 		Message ("couldn't initialize video",  SDL_GetError()); 
