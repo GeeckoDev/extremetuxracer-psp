@@ -84,8 +84,18 @@ void DrawCreditsText (double time_step){
 
 
     glDisable (GL_TEXTURE_2D);
+#ifdef __PSP__
+	glColor4fv ((float*)&bgcol);
+	glBegin( GL_TRIANGLE_STRIP );
+		glVertex2f (0, 0 );
+		glVertex2f (w, 0 );
+		glVertex2f (w, h );
+		glVertex2f (0, h );
+    glEnd();
+#else
 	glColor4dv ((double*)&bgcol);
-    glRectf (0, 0, w, BOTT_Y);
+	glRectf (0, 0, w, BOTT_Y);
+#endif
 
     glBegin( GL_QUADS );
 		glVertex2f (0, BOTT_Y );
@@ -95,8 +105,18 @@ void DrawCreditsText (double time_step){
 		glVertex2f (0, BOTT_Y + 30 );
     glEnd();
 
-    glColor4dv ((double*)&bgcol);
-    glRectf (0, h - TOP_Y, w, h );
+#ifdef __PSP__
+	glColor4fv ((float*)&bgcol);
+	glBegin( GL_TRIANGLE_STRIP );
+		glVertex2f (0, h - TOP_Y );
+		glVertex2f (w, h - TOP_Y );
+		glVertex2f (w, h - TOP_Y + h );
+		glVertex2f (0, h - TOP_Y + h );
+    glEnd();
+#else
+	glColor4dv ((double*)&bgcol);
+	glRectf (0, h - TOP_Y, w, h );
+#endif
     
 	glBegin( GL_QUADS );
 		glVertex2f (w, h - TOP_Y );
@@ -119,8 +139,10 @@ void DrawBackLogo (int x, int y, double size) {
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture (GL_TEXTURE_2D, Tex.TexID (T_TITLE));
 
+#ifndef __PSP__ // FIXME
 	glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
 	glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
+#endif
 
 	width  = w * size;
 	height = h * size;

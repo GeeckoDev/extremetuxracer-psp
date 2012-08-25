@@ -66,7 +66,11 @@ typedef struct {int i, j;}				TIndex2;
 typedef struct {int i, j, k;}			TIndex3;
 typedef struct {int i, j, k, l;}		TIndex4;
 
+#ifdef __PSP__
+typedef struct {float r, g, b, a;}		TColor;
+#else
 typedef struct {double r, g, b, a;}		TColor;
+#endif
 typedef struct {double r, g, b;}		TColor3;
 typedef struct {double x, y, z;}		TTuple;
 typedef struct {double a, b, c, d;}		TTuple4;
