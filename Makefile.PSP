@@ -1,0 +1,34 @@
+PSPSDK=$(shell psp-config --pspsdk-path)
+PSPDIR=$(shell psp-config --psp-prefix)
+
+MEDIA = /media/PANDORA/PSP/GAME/CAT_Homebrews\ perso/
+TARGET = etr
+
+OBJS = main.o game_config.o ogl.o tux.o audio.o winsys.o \
+       particles.o mathlib.o splash_screen.o intro.o racing.o \
+       game_over.o paused.o reset.o game_type_select.o event_select.o \
+       race_select.o credits.o loading.o course.o keyframe.o env.o event.o \
+       spx.o common.o course_render.o game_ctrl.o physics.o \
+       track_marks.o hud.o view.o gui.o translation.o tools.o \
+       quadtree.o font.o ft_font.o textures.o help.o regist.o tool_frame.o \
+       tool_char.o newplayer.o score.o ogl_test.o
+       
+LIBS = -lGL -lGLU -lSDL -lSDL_image -lSDL_mixer -lfreetype
+
+CFLAGS = -O2 -G0 -Wall -DOS_LINUX -I$(PSPDIR)/include/freetype2
+CXXFLAGS = -fexceptions -fno-rtti
+ASFLAGS = 
+
+BUILD_PRX = 1
+EXTRA_TARGETS = EBOOT.PBP
+PSP_EBOOT_TITLE = ExtremeTuxRacer
+#PSP_EBOOT_ICON = icon0.png
+PSP_FW_VERSION = 500
+
+include $(PSPSDK)/lib/build.mak 
+install:
+	cp ./EBOOT.PBP $(MEDIA)$(TARGET)
+dir:
+	mkdir $(MEDIA)$(TARGET)
+lclean:
+	rm *.o
