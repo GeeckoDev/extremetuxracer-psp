@@ -71,7 +71,11 @@ typedef struct {double r, g, b;}		TColor3;
 typedef struct {double x, y, z;}		TTuple;
 typedef struct {double a, b, c, d;}		TTuple4;
 
+#ifdef __PSP__
+typedef float							TMatrix[4][4];
+#else
 typedef double							TMatrix[4][4]; 
+#endif
 typedef double							TMatrixGL[16];
 typedef struct {double x, y, z, w;}		TQuaternion;
 

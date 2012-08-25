@@ -184,7 +184,12 @@ void setup_view_matrix (CControl *ctrl, bool save_mat) {
 		}
 	}
     glLoadIdentity();	
+    
+#ifdef __PSP__
+	glMultMatrixf ((float*) view_mat);
+#else    
 	glMultMatrixd ((double*) view_mat);
+#endif
 }
 
 TVector3 MakeViewVector () {
@@ -219,8 +224,12 @@ void update_view (CControl *ctrl, double dt) {
     double time_constant_mult;
 
 	if (is_stationary) {
-		glLoadIdentity();	
+		glLoadIdentity();
+#ifdef __PSP__
+		glMultMatrixf ((float*) stationary_matrix);
+#else
 		glMultMatrixd ((double*) stationary_matrix);
+#endif
 		return;
 	}
 
