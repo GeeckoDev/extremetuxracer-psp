@@ -788,6 +788,7 @@ FTPixmapGlyph::FTPixmapGlyph( FT_GlyphSlot glyph)
 FTPixmapGlyph::~FTPixmapGlyph() {delete [] data;}
 
 const FTPoint& FTPixmapGlyph::Render( const FTPoint& pen) {
+#ifndef __PSP__ // FIXME
     glBitmap( 0, 0, 0.0f, 0.0f, pen.X() + pos.X(), pen.Y() - pos.Y(), (const GLubyte*)0);
     
     if( data) {
@@ -797,6 +798,7 @@ const FTPoint& FTPixmapGlyph::Render( const FTPoint& pen) {
         glDrawPixels( destWidth, destHeight, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, (const GLvoid*)data);
     }
     glBitmap( 0, 0, 0.0f, 0.0f, -pos.X(), pos.Y(), (const GLubyte*)0);
+#endif
     return advance;
 }
 
