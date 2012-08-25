@@ -440,8 +440,10 @@ void CTexture::DrawDirect (GLuint texid) {
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture (GL_TEXTURE_2D, texid);
 
+#ifndef __PSP__ // FIXME
 	glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
 	glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
+#endif
 
     glColor4f (1.0, 1.0, 1.0, 1.0);
 	glBegin (GL_QUADS);
@@ -468,8 +470,10 @@ void CTexture::DrawDirect (GLuint texid, int x, int y, float size) {
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture (GL_TEXTURE_2D, texid);
 
+#ifndef __PSP__ // FIXME
 	glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
 	glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
+#endif
 
 	width  = w * size;
 	height = h * size;
@@ -510,8 +514,10 @@ void CTexture::DrawDirect (GLuint texid, int x, int y, float width, float height
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture (GL_TEXTURE_2D, texid);
 
+#ifndef __PSP__ // FIXME
 	glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
 	glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
+#endif
 
 	if (forientation == OR_TOP) {
 		top = param.y_resolution - y;
@@ -550,8 +556,10 @@ void CTexture::DrawDirectFrame (GLuint texid, int x, int y, double w, double h, 
 	glBindTexture (GL_TEXTURE_2D, texid);
 
 	if (frame > 0) {
+#ifndef __PSP__ // FIXME
 		if (w < 1) glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &ww);
 		if (h < 1) glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &hh);
+#endif
 
 	   glColor4f (col.r, col.g, col.b, 1.0);
 		
