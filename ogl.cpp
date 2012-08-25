@@ -89,6 +89,7 @@ void InitOpenglExtensions () {
 }
 
 void PrintGLInfo (){
+#ifndef __PSP__
     char *extensions;
     char *p, *oldp;
     int i;
@@ -139,6 +140,7 @@ void PrintGLInfo (){
 			Message ("","");
 		}
     }
+#endif
 }
 
 void set_material (TColor diffuse_colour, TColor specular_colour, double specular_exp) {
