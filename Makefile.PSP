@@ -13,7 +13,9 @@ OBJS = main.o game_config.o ogl.o tux.o audio.o winsys.o \
        quadtree.o font.o ft_font.o textures.o help.o regist.o tool_frame.o \
        tool_char.o newplayer.o score.o ogl_test.o
        
-LIBS = -lGL -lGLU -lSDL -lSDL_image -lSDL_mixer -lfreetype
+LIBS = -lSDL_image -lSDL_mixer -lSDL -lfreetype -lGL -lGLU -lstdc++ \
+       -lvorbisidec -lvorbis -logg -ljpeg -lpng -lz -lm \
+       -lpspgu -lpspvfpu -lpspirkeyb -lpsppower -lpspaudio -lpsprtc -lpsphprm
 
 CFLAGS = -O2 -G0 -Wall -DOS_LINUX -I$(PSPDIR)/include/freetype2
 CXXFLAGS = -fexceptions -fno-rtti
