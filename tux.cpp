@@ -419,6 +419,7 @@ void CCharShape::CreateMaterial (const char *line) {
 // --------------------------------------------------------------------
 
 void CCharShape::DrawCharSphere (int num_divisions) {
+#ifndef __PSP__
     GLUquadricObj *qobj;
     qobj = gluNewQuadric();
     gluQuadricDrawStyle (qobj, GLU_FILL);
@@ -426,6 +427,7 @@ void CCharShape::DrawCharSphere (int num_divisions) {
     gluQuadricNormals (qobj, GLU_SMOOTH);
     gluSphere (qobj, 1.0, (GLint)2.0 * num_divisions, num_divisions);
     gluDeleteQuadric (qobj);
+#endif
 }
 
 GLuint CCharShape::GetDisplayList (int divisions) {
@@ -454,7 +456,11 @@ GLuint CCharShape::GetDisplayList (int divisions) {
 void CCharShape::DrawNodes (TCharNode *node) {
     TCharNode *child;
     glPushMatrix();
+#ifdef __PSP__
+	glMultMatrixf ((float *) node->trans);
+#else
     glMultMatrixd ((double *) node->trans);
+#endif
 
 	if (node->node_name == highlight_node) highlighted = true;
 	TCharMaterial *mat; 
