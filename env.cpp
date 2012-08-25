@@ -114,11 +114,13 @@ void CEnvironment::SetupFog () {
     glFogf   (GL_FOG_END, fog.end);
     glFogfv  (GL_FOG_COLOR, fog.color);
 
+#ifndef __PSP__
     if (param.perf_level > 1) {
 		glHint (GL_FOG_HINT, GL_NICEST );
     } else {
 		glHint (GL_FOG_HINT, GL_FASTEST );
     }
+#endif
 }
 
 void CEnvironment::ResetLight () {
