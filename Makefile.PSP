@@ -17,7 +17,7 @@ LIBS = -lSDL_image -lSDL_mixer -lSDL -lfreetype -lGL -lGLU -lstdc++ \
        -lvorbisidec -lvorbis -logg -ljpeg -lpng -lz -lm \
        -lpspgu -lpspvfpu -lpspirkeyb -lpsppower -lpspaudio -lpsprtc -lpsphprm
 
-CFLAGS = -O2 -G0 -Wall -DOS_LINUX -I$(PSPDIR)/include/freetype2
+CFLAGS = -O2 -G0 -Wall -DOS_LINUX -D__PSP__ -I$(PSPDIR)/include/freetype2
 CXXFLAGS = -fexceptions -fno-rtti
 ASFLAGS = 
 

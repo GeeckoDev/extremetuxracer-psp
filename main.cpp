@@ -43,6 +43,49 @@ GNU General Public License for more details.
 #include "score.h"
 #include "ogl_test.h"
 
+#ifdef __PSP__
+extern "C"
+{
+	#include <pspkernel.h>
+
+	PSP_MODULE_INFO("etr", 0, 1, 1);
+	PSP_HEAP_SIZE_MAX();
+	PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
+
+	int callbacks_exit(int, int, void*)
+	{
+		sceKernelExitGame();
+
+		return 0;
+	}
+	  
+	int callbacks_thread(unsigned int, void*)
+	{
+		int id;
+		
+		id = sceKernelCreateCallback("exit_cb", callbacks_exit, NULL);
+		sceKernelRegisterExitCallback(id);
+		sceKernelSleepThreadCB();
+		
+		return 0;
+	}
+	  
+	int callbacks_setup()
+	{
+		int id;
+		
+		id = sceKernelCreateThread("cb", callbacks_thread, 0x11, 0xFA0, 0, NULL);
+		
+		if (id >= 0)
+		{
+		    sceKernelStartThread(id, 0, NULL);
+		}
+		
+		return id;
+	}
+}
+#endif
+
 TGameData g_game;
 
 void InitGame (int argc, char **argv) {
@@ -85,6 +128,10 @@ void InitGame (int argc, char **argv) {
 #endif
 
 int main( int argc, char **argv ) {
+#ifdef __PSP__
+	callbacks_setup();
+#endif
+
 	// ****************************************************************
 	printf ("\n----------- Extreme Tux Racer " VERSION " ----------------");
     printf ("\n----------- (C) 2010 Extreme Tuxracer Team  --------\n\n ");
