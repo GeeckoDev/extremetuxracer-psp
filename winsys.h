@@ -22,6 +22,14 @@ GNU General Public License for more details.
 
 #define NUM_RESOLUTIONS 10
 
+#ifdef __PSP__
+#define DEFAULT_X_RESOLUTION 480
+#define DEFAULT_Y_RESOLUTION 272
+#else
+#define DEFAULT_X_RESOLUTION 800
+#define DEFAULT_Y_RESOLUTION 600
+#endif
+
 typedef void (*TInitFuncN)    (void);
 typedef void (*TLoopFuncN)    (double time_step);
 typedef void (*TTermFuncN)    (void);

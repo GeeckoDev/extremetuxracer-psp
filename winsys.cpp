@@ -47,7 +47,7 @@ CWinsys::CWinsys () {
 	joystick_active = false;
 
  	resolution[0] = MakeRes (0, 0);
-	resolution[1] = MakeRes (800, 600);
+	resolution[1] = MakeRes (DEFAULT_X_RESOLUTION, DEFAULT_Y_RESOLUTION);
 	resolution[2] = MakeRes (1024, 768);
 	resolution[3] = MakeRes (1152, 864);
 	resolution[4] = MakeRes (1280, 960);
@@ -56,9 +56,9 @@ CWinsys::CWinsys () {
 	resolution[7] = MakeRes (1400, 1050);
 	resolution[8] = MakeRes (1440, 900);
 	resolution[9] = MakeRes (1680, 1050);
-	
-	auto_x_resolution = 800;
-	auto_y_resolution = 600;
+
+	auto_x_resolution = DEFAULT_X_RESOLUTION;
+	auto_y_resolution = DEFAULT_Y_RESOLUTION;
 
 	clock_time = 0;
 	cur_time = 0;
@@ -77,13 +77,15 @@ TScreenRes CWinsys::MakeRes (int width, int height) {
 }
 
 TScreenRes CWinsys::GetResolution (int idx) {
-	if (idx < 0 || idx >= NUM_RESOLUTIONS) return MakeRes (800, 600);
+	if (idx < 0 || idx >= NUM_RESOLUTIONS) {
+		return MakeRes (DEFAULT_X_RESOLUTION, DEFAULT_Y_RESOLUTION);
+	}
 	return resolution[idx];
 }
 
 string CWinsys::GetResName (int idx) {
 	string line;
-	if (idx < 0 || idx >= NUM_RESOLUTIONS) return "800 x 600";
+	if (idx < 0 || idx >= NUM_RESOLUTIONS) return "default";
 	if (idx == 0) return ("auto");
 	line = Int_StrN (resolution[idx].width);
 	line += " x " + Int_StrN (resolution[idx].height);
@@ -122,8 +124,9 @@ void CWinsys::SetupVideoMode (TScreenRes resolution) {
 	if ((screen = SDL_SetVideoMode 
 	(resolution.width, resolution.height, bpp, video_flags)) == NULL) {
 		Message ("couldn't initialize video",  SDL_GetError()); 
-		Message ("set to 800 x 600");
-		screen = SDL_SetVideoMode (800, 600, bpp, video_flags);
+		Message ("set to default resolution");
+		screen = SDL_SetVideoMode (DEFAULT_X_RESOLUTION, DEFAULT_Y_RESOLUTION,
+								   bpp, video_flags);
 		param.res_type = 1;
 		SaveConfigFile ();
 	}
@@ -139,7 +142,9 @@ void CWinsys::SetupVideoMode (TScreenRes resolution) {
 }
 
 void CWinsys::SetupVideoMode (int idx) {
-	if (idx < 0 || idx >= NUM_RESOLUTIONS) SetupVideoMode (MakeRes (800, 600));
+	if (idx < 0 || idx >= NUM_RESOLUTIONS) {
+		SetupVideoMode (MakeRes (DEFAULT_X_RESOLUTION, DEFAULT_Y_RESOLUTION));
+	}
 	else SetupVideoMode (resolution[idx]);
 }
 
