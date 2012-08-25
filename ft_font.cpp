@@ -844,10 +844,12 @@ void FTGLPixmapFont::Render( const char* string) {
     GLfloat ftglColour[4];
     glGetFloatv( GL_CURRENT_RASTER_COLOR, ftglColour);
 
+#ifndef __PSP__ // FIXME
     glPixelTransferf(GL_RED_SCALE, ftglColour[0]);
     glPixelTransferf(GL_GREEN_SCALE, ftglColour[1]);
     glPixelTransferf(GL_BLUE_SCALE, ftglColour[2]);
     glPixelTransferf(GL_ALPHA_SCALE, ftglColour[3]);
+#endif
 
     FTFont::Render( string);
 
@@ -868,10 +870,12 @@ void FTGLPixmapFont::Render( const wchar_t* string) {
     GLfloat ftglColour[4];
     glGetFloatv( GL_CURRENT_RASTER_COLOR, ftglColour);
 
+#ifndef __PSP__ // FIXME
     glPixelTransferf(GL_RED_SCALE, ftglColour[0]);
     glPixelTransferf(GL_GREEN_SCALE, ftglColour[1]);
     glPixelTransferf(GL_BLUE_SCALE, ftglColour[2]);
     glPixelTransferf(GL_ALPHA_SCALE, ftglColour[3]);
+#endif
 
     FTFont::Render( string);
 
