@@ -24,7 +24,7 @@ ASFLAGS =
 BUILD_PRX = 1
 EXTRA_TARGETS = EBOOT.PBP
 PSP_EBOOT_TITLE = ExtremeTuxRacer
-#PSP_EBOOT_ICON = icon0.png
+PSP_EBOOT_ICON = icon0.png
 PSP_FW_VERSION = 500
 
 include $(PSPSDK)/lib/build.mak 
