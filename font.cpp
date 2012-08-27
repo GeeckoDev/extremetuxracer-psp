@@ -58,7 +58,6 @@ void MakeWordList (CSPList *wordlist, const char *s) {
 
 	string entry, istr;
 	string dest2 (dest);
-//	string *dest2 = new string (dest);
 	for (int i=0; i<wd; i++) {
 		istr = Int_StrN (i);
 		entry = SPStrN (dest2, istr, "");	
@@ -196,8 +195,7 @@ void CFont::UnicodeStr (wchar_t *buff, const char *string) {
 
 int CFont::LoadFont (string name, const char *path) {
 	if (numFonts >= MAX_FONTS) return -1;	
-	fonts[numFonts] = new FTGLPixmapFont (path);
-//	fonts[numFonts] = new FTGLTextureFont (path);
+	fonts[numFonts] = new FTGLTextureFont (path);
 	if (fonts[numFonts]->Error()) {
 		Message ("Failed to open font");
 		return -1;
@@ -306,13 +304,11 @@ void CFont::DrawText (float x, float y, const char *text) {
 	else left = (param.x_resolution - GetTextWidth (text)) / 2;
 	if (left < 0) left = 0;
 
-#ifndef __PSP__ // FIXME
 	if (forientation == OR_TOP) {
-		glRasterPos2i ((int)left, (int)(param.y_resolution - curr_size - y));
+		glTranslatef(left, param.y_resolution - curr_size - y, 0.0f);
 	} else {
-		glRasterPos2i ((int)left, (int)y);
+		glTranslatef(left, y, 0.0f);
 	}
-#endif
 
 	if (USE_UNICODE) fonts[curr_font]->Render (UnicodeStr (text));
 		else fonts[curr_font]->Render (text);
@@ -332,13 +328,11 @@ void CFont::DrawText (float x, float y, const wchar_t *text) {
 	else left = (param.x_resolution - GetTextWidth (text)) / 2;
 	if (left < 0) left = 0;
 
-#ifndef __PSP__ // FIXME
 	if (forientation == OR_TOP) {
-		glRasterPos2i ((int)left, (int)(param.y_resolution - curr_size - y));
+		glTranslatef(left, param.y_resolution - curr_size - y, 0.0f);
 	} else {
-		glRasterPos2i ((int)left, (int)y);
+		glTranslatef(left, y, 0.0f);
 	}
-#endif
 
 	fonts[curr_font]->Render (text);
 	glPopMatrix();
@@ -363,13 +357,11 @@ void CFont::DrawText
 	else left = (param.x_resolution - GetTextWidth (text, fontname, size)) / 2;
 	if (left < 0) left = 0;
 
-#ifndef __PSP__ // FIXME
 	if (forientation == OR_TOP) {
-		glRasterPos2i ((int)left, (int)(param.y_resolution - size - y));
+		glTranslatef(left, param.y_resolution - size - y, 0.0f);
 	} else {
-		glRasterPos2i ((int)left, (int)y);
+		glTranslatef(left, y, 0.0f);
 	}
-#endif
 
 	if (USE_UNICODE) fonts[temp_font]->Render (UnicodeStr (text));
 		else fonts[temp_font]->Render (text);
@@ -391,13 +383,11 @@ void CFont::DrawText
 	else left = (param.x_resolution - GetTextWidth (text, fontname, size)) / 2;
 	if (left < 0) left = 0;
 
-#ifndef __PSP__ // FIXME
 	if (forientation == OR_TOP) {
-		glRasterPos2i ((int)left, (int)(param.y_resolution - size - y));
+		glTranslatef(left, param.y_resolution - size - y, 0.0f);
 	} else {
-		glRasterPos2i ((int)left, (int)y);
+		glTranslatef(left, y, 0.0f);
 	}
-#endif
 
 	fonts[temp_font]->Render (text);
 	glPopMatrix();
