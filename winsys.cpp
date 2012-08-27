@@ -93,10 +93,14 @@ string CWinsys::GetResName (int idx) {
 }
 
 double CWinsys::CalcScreenScale () {
+#ifdef __PSP__
+	return 0.5;
+#else
 	double hh = (double)param.y_resolution;
 	if (hh < 768) return 0.78; 
 	else if (hh == 768) return 1.0;
 	else return (hh / 768);
+#endif
 }
 
 /*
