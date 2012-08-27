@@ -23,6 +23,22 @@ GNU General Public License for more details.
 #include "score.h"
 #include "textures.h"
 
+#ifdef __PSP__
+#include <pspctrl.h>
+
+#define EVENT_PRESS(jkey, kkey) \
+	if (pad.Buttons & jkey && !(oldPad.Buttons & jkey)) { \
+		psp_event.keysym.sym = kkey; \
+		SDL_PushEvent((SDL_Event*)&psp_event); \
+	}
+
+#define EVENT_RELEASE(jkey, kkey) \
+	if (!(pad.Buttons & jkey) && oldPad.Buttons & jkey) { \
+		psp_event.keysym.sym = kkey; \
+		SDL_PushEvent((SDL_Event*)&psp_event); \
+	}
+#endif
+
 #define USE_JOYSTICK true
 
 CWinsys Winsys;
@@ -280,6 +296,36 @@ void CWinsys::PollEvent () {
     unsigned int key, axis;
     int x, y;
 	float val;
+
+#ifdef __PSP__
+	static SceCtrlData pad, oldPad;
+	SDL_KeyboardEvent psp_event;
+	
+	oldPad = pad;
+	sceCtrlPeekBufferPositive(&pad, 1);
+	
+	// generate SDL events from key presses and releases
+
+	psp_event.type = SDL_KEYDOWN;
+	psp_event.which = 0;
+	psp_event.state = SDL_PRESSED;
+	EVENT_PRESS(PSP_CTRL_CROSS, SDLK_RETURN);
+	EVENT_PRESS(PSP_CTRL_CIRCLE, SDLK_ESCAPE);
+	EVENT_PRESS(PSP_CTRL_LEFT, SDLK_LEFT);
+	EVENT_PRESS(PSP_CTRL_RIGHT, SDLK_RIGHT);
+	EVENT_PRESS(PSP_CTRL_UP, SDLK_UP);
+	EVENT_PRESS(PSP_CTRL_DOWN, SDLK_DOWN);
+	
+	psp_event.type = SDL_KEYUP;
+	psp_event.which = 0;
+	psp_event.state = SDL_RELEASED;
+	EVENT_RELEASE(PSP_CTRL_CROSS, SDLK_RETURN);
+	EVENT_RELEASE(PSP_CTRL_CIRCLE, SDLK_ESCAPE);
+	EVENT_RELEASE(PSP_CTRL_LEFT, SDLK_LEFT);
+	EVENT_RELEASE(PSP_CTRL_RIGHT, SDLK_RIGHT);
+	EVENT_RELEASE(PSP_CTRL_UP, SDLK_UP);
+	EVENT_RELEASE(PSP_CTRL_DOWN, SDLK_DOWN);
+#endif
 
 	while (SDL_PollEvent (&event)) {
 		if (ModePending()) {
